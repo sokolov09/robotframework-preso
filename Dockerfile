@@ -7,6 +7,7 @@ RUN apk update && apk upgrade \
     chromium@latest-stable \
     chromium-chromedriver@latest-stable \
     python3 \
+    tzdata \
   && pip3 install robotframework robotframework-seleniumlibrary faker==2.0.1 robotframework-faker==4.2.0 \
   && rm -rf /var/lib/apt/lists/* \
     /var/cache/apk/* \
@@ -17,9 +18,11 @@ RUN apk update && apk upgrade \
 RUN mkdir -p /robot \
     && adduser -D chrome \
     && chown -R chrome:chrome /robot
+
 # Run Chrome as non-privileged
 USER chrome
 WORKDIR /robot
 
 ENV CHROME_BIN=/usr/bin/chromium-browser \
-    CHROME_PATH=/usr/lib/chromium/
+    CHROME_PATH=/usr/lib/chromium/ \
+    TZ=Europe/Kiev
